@@ -5,7 +5,7 @@ import Contentcard from "../components/Contentcard"
 
 function PageHome() {
 
-const [datas,setDatas] = useState({})
+const [datas,setDatas] = useState([{title : "",content : "" ,slug : ""}])
 
 useEffect(()=>{
     axios.get(`${process.env.REACT_APP_API}/blogs`).then(res => {
