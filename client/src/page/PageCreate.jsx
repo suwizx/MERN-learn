@@ -1,21 +1,35 @@
 import { useState } from "react"
 import axios from "axios"
 import Swal from "sweetalert2"
+import {useNavigate} from "react-router-dom"
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function PageCreate(){
 
-    const [data,setData] = useState({title:"",content:"",slug:""})
-    const { title , content , slug } = data
+    const navigate = useNavigate()
+
+    const [data,setData] = useState({title:"",slug:""})
+    const [contentData,setContentData] = useState("")
+
+    console.log(contentData)
+
+    const { title , slug } = data
 
     const changeData = name => feild =>{
         setData({...data,[name]:feild.target.value})
     }
-
+    
     const submitData = () => {
-        axios.post(`${process.env.REACT_APP_API}/create`,data).then(Swal.fire({
+        axios.post(`${process.env.REACT_APP_API}/create`,{title , content : contentData , slug}).then(()=>{Swal.fire({
             icon :"success",
             title :"บันทึกข้อมูลสำเร็จ"
-        })).catch((err)=>{
+        })
+        navigate("/")
+        setData({title:"",slug:""})
+        setContentData("")
+    
+    }).catch((err)=>{
             console.log(err.response.data.errcode)
             Swal.fire({
                 icon : "error",
@@ -23,7 +37,8 @@ function PageCreate(){
                 text : err.response.data.error,
             })
         })
-        setData({title:"",content:"",slug:""})
+        
+        
     }
 
     return(
@@ -38,8 +53,8 @@ function PageCreate(){
                         <input id="slug" type="text" value={slug} onChange={changeData("slug")} className="form-control" />
                     </div>
                     <div className="my-3">
-                        <label htmlFor="title" className="fw-bold">หัวข้อ</label>
-                        <textarea className="form-control" onChange={changeData("content")} value={content} style={{height : "300px"}}></textarea>
+                        <label htmlFor="title" className="fw-bold">เนื้อหา</label>
+                        <ReactQuill  value={contentData} onChange={(e)=>{setContentData(e)}}  />
                     </div>
                     <button onClick={submitData} className="btn btn-primary">บันทึก</button>
                 </div>
@@ -47,5 +62,6 @@ function PageCreate(){
         </div>
     )
 } 
+
 
 export default PageCreate

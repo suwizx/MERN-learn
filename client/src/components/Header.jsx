@@ -11,7 +11,7 @@ function Header() {
                     <ul className="navbar-nav mx-auto">
                         <li className="nav-item"><NavLink activeClassName="active" className="nav-link" to="/">หน้าหลัก</NavLink></li>
                         <li className="nav-item"><NavLink activeClassName="active" className="nav-link" to="/create">สร้างโพสต์</NavLink></li>
-                    </ul><a className="btn btn-primary shadow" role="button" href="signup.html">Sign up</a>
+                    </ul><NavLink to="/login" className="btn btn-primary shadow">เข้าสู่ระบบ</NavLink>
                 </div>
             </div>
         </nav>

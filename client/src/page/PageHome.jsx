@@ -26,8 +26,7 @@ useEffect(()=>{
                 <h1 className="fw-bold">Home Page</h1>
                 <div className="py-2">
                     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
-                       {JSON.stringify(datas)}
-                       {datas.map((data,index)=>(<Contentcard key={index} title={data.title} content={data.content} author={data.author}/>))}
+                       {datas.map((data,index)=>(<Contentcard key={index} title={data.title} content={data.content} createdAt={data.createdAt}  author={data.author} slug={data.slug} />))}
                     </div>
                 </div>
             </div>

@@ -48,3 +48,26 @@ exports.getblogs=(req,res) => {
     })
 
 }
+
+exports.getblog=(req,res) => {
+    const {slug} = req.params
+    Blogs.findOne({slug}).exec((err,blog)=>{
+        res.json(blog)
+    })
+}
+
+exports.remove=(req,res)=>{
+    const {slug} = req.params
+    Blogs.findOneAndRemove({slug}).exec((err,blog)=>{
+        if(err){
+            res.status(400).json(err)
+        }
+        res.status(200).json({blog})
+    })
+}
+
+exports.updateblog=(req,res) => {
+    const {slug} = req.params
+    const { title , content , author } = req.body
+    Blogs.findOneAndUpdate({slug},{title , content , author}, {new:true}).exec((err,blog) => {if(err){res.status(400).json({err:err})};res.status(200).json(blog)})
+}
